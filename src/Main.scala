@@ -20,30 +20,33 @@ case class World(cells: List[Cell], yr: Int, xr: Int) {
   def fillInString(string: String, cellsList: List[Cell]): String = if (cellsList.length == 0) {
     string
   } else{
+    println(string)
+    println("done!")
     fillInString(addCellToString(string, cellsList.head), cellsList.tail)
   }
 
   def addCellToString(string: String, cell: Cell): String = {
-    val loc = (cell.yc * (xr+1)) + cell.xc
+    val loc = (cell.xc * (xr+1)) + cell.yc
     val start = string.substring(0, loc-1)
     val end = string.substring(loc + 1)
-    val character = cell.ty.match{
-      case Head => "="
-      case Tail => "-"
-      case Empty => "_"
-    }
+    val character = typeToString(cell)
     start.concat(character).concat(end)
   }
 
+  def typeToString(cell: Cell): String = cell.ty match {
+    case Head => "="
+    case Tail => "-"
+    case Empty => "_"
+  }
 
   def blankWorld(yp: Int, xp: Int ): String = if (yp > yr){
     ""
   } else if (xp > xr) {
-    "/n".concat(blankWorld(yp+1, 0))
+    "\n".concat(blankWorld(yp+1, 0))
   } else {
     "_".concat(blankWorld(yp, xp+1))
   }
-  
+
   def cellsToString(cellsList: List[Cell]) : String = cellsList.head.ty match {
     case Head => "=".concat(cellsToString(cellsList.tail))
     case Tail => "-".concat(cellsToString(cellsList.tail))
@@ -51,7 +54,7 @@ case class World(cells: List[Cell], yr: Int, xr: Int) {
   }
 
   def finished(): Boolean = {
-    true
+    false
   }
 }
 
@@ -64,30 +67,33 @@ case class Cell(xc: Int, yc: Int, ty: CellType) {}
 
 object Main {
   def stringToWorld(string: String): World = {
-    World(stringToWorldHelper(string, List(), 0, 0), string.count(\n) + 1, string.length/(string.count(\n) + 1))
+    World(stringToWorldHelper(string, List(), 0, 0), string.count(_ == '\n') +1, string.length/(string.count(_ == '\n') + 1))
   }
 
   def stringToWorldHelper(string: String, cells: List[Cell], row: Int, col: Int): List[Cell] = if (string.length <= 0){
     List()
-  } else if (string.charAt(0) == \n) {
-      stringToWorldHelper(string.substring(1), cells, row + 1, 0)
+//  } else if (string.charAt(0) == '\n') {
+//      println("new line")
+//      stringToWorldHelper(string.substring(1), cells, row + 1, 0)
   } else if (string.charAt(0) == '='){
       List(Cell(row, col, Head )) ++ stringToWorldHelper(string.substring(1), cells, row , col+1)
   } else if (string.charAt(0) == '-'){
       List(Cell(row, col, Tail)) ++ stringToWorldHelper(string.substring(1), cells, row , col+1)
+  } else if (string.charAt(0) == '_'){
+      stringToWorldHelper(string.substring(1), cells, row , col+1)
   } else {
-      List()
+      stringToWorldHelper(string.substring(1), cells, row + 1, 0)
   }
 
   def main(args: Array[String]): Unit = {
-    displayWorld(stringToWorld("_--=_ \n ___-_ \n ___-_ \n _---_"), 10)
+    displayWorld(stringToWorld("_--=_\n___-_\n___-_\n_---_"), 1)
   }
 
   def displayWorld(world: World, upperLimit: Int): World = if (world.finished() || upperLimit <= 0){
+    world
+  } else {
     val newWorld = world.transition()
     println(newWorld.worldToString())
     displayWorld(newWorld, upperLimit - 1)
-  } else {
-    world
   }
 }
