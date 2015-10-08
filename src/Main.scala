@@ -122,7 +122,7 @@ object Main {
   }
 
   def main(args: Array[String]): Unit = {
-    displayWorld(stringToWorld("_-+=_\n___-_\n___-_\n_---_"), 10)
+    displayWorld(stringToWorld("_-+=_\n____-\n____-\n_---_"), 10)
   }
 
   def displayWorld(world: World, upperLimit: Int): World = if (world.finished() || upperLimit <= 0){
