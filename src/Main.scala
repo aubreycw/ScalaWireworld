@@ -2,12 +2,26 @@
  * Created by Emily on 7/10/15.
  */
 
+
 case class World(cells: List[Cell], yr: Int, xr: Int) {
   def transition(): World = {
-    transitionCells(cells)
+    World(transitionCells(cells), yr, xr)
   }
 
-  def transitionCells(cellsList: List[Cell]) = this
+  def transitionCells(cellsList: List[Cell]): List[Cell] = if (cellsList.length == 0){
+    List()
+  } else {
+    transitionOneCell(cellsList.head) ++ transitionCells(cellsList.tail)
+  }
+
+  def transitionOneCell(cell: Cell): Cell = cell.ty match {
+    case Head => Cell(cell.yc, cell.xc, Tail)
+    case Tail => Cell(cell.yc, cell.xc, Wire)
+    case Wire => transitionWire(cell.yc, cell.xc)
+    case Empty => Cell(cell.yc, cell.xc, Empty)
+  }
+
+  def transitionWire(yc: Int, xc: Int): Cell = 
 
   def worldToString(): String = {
     fillInString(blankWorld(0, 0), cells)
@@ -34,6 +48,7 @@ case class World(cells: List[Cell], yr: Int, xr: Int) {
   def typeToString(cell: Cell): String = cell.ty match {
     case Head => "="
     case Wire => "-"
+    case Tail => "+"
     case Empty => "_"
   }
 
@@ -47,7 +62,8 @@ case class World(cells: List[Cell], yr: Int, xr: Int) {
 
   def cellsToString(cellsList: List[Cell]) : String = cellsList.head.ty match {
     case Head => "=".concat(cellsToString(cellsList.tail))
-    case Tail => "-".concat(cellsToString(cellsList.tail))
+    case Tail => "+".concat(cellsToString(cellsList.tail))
+    case Wire => "-".concat(cellsToString(cellsList.tail))
     case Empty => "_".concat(cellsToString(cellsList.tail))
   }
 
@@ -78,16 +94,16 @@ object Main {
       List(Cell(row, col, Head )) ++ stringToWorldHelper(string.substring(1), cells, row , col+1)
   } else if (string.charAt(0) == '-'){
     List(Cell(row, col, Wire)) ++ stringToWorldHelper(string.substring(1), cells, row , col+1)
-  } else if (string.charAt(0) == '-'){
-    List(Cell(row, col, Tail)) ++ stringToWorldHelper(string.substring(1), cells, row , col+1)
   } else if (string.charAt(0) == '+'){
+    List(Cell(row, col, Tail)) ++ stringToWorldHelper(string.substring(1), cells, row , col+1)
+  } else if (string.charAt(0) == '_'){
       stringToWorldHelper(string.substring(1), cells, row , col+1)
   } else {
       stringToWorldHelper(string.substring(1), cells, row + 1, 0)
   }
 
   def main(args: Array[String]): Unit = {
-    displayWorld(stringToWorld("_-+=_\n___-_\n___-_\n_---_"), 1)
+    displayWorld(stringToWorld("_-+=_\n___-_\n___-_\n_---_"), 10)
   }
 
   def displayWorld(world: World, upperLimit: Int): World = if (world.finished() || upperLimit <= 0){
