@@ -1,17 +1,13 @@
 /**
  * Created by Emily on 7/10/15.
  */
-//  world class
-//    - cell class
-//  stringToWorld
-//  worldToString
-//  main function (at each step transition and show)
-//  transition function
 
 case class World(cells: List[Cell], yr: Int, xr: Int) {
   def transition(): World = {
-    this
+    transitionCells(cells)
   }
+
+  def transitionCells(cellsList: List[Cell]) = this
 
   def worldToString(): String = {
     fillInString(blankWorld(0, 0), cells)
@@ -37,7 +33,7 @@ case class World(cells: List[Cell], yr: Int, xr: Int) {
 
   def typeToString(cell: Cell): String = cell.ty match {
     case Head => "="
-    case Tail => "-"
+    case Wire => "-"
     case Empty => "_"
   }
 
@@ -63,6 +59,7 @@ case class World(cells: List[Cell], yr: Int, xr: Int) {
 sealed abstract class CellType
 case object Head extends CellType
 case object Tail extends CellType
+case object Wire extends CellType
 case object Empty extends CellType
 
 case class Cell(xc: Int, yc: Int, ty: CellType) {}
@@ -80,15 +77,17 @@ object Main {
   } else if (string.charAt(0) == '='){
       List(Cell(row, col, Head )) ++ stringToWorldHelper(string.substring(1), cells, row , col+1)
   } else if (string.charAt(0) == '-'){
-      List(Cell(row, col, Tail)) ++ stringToWorldHelper(string.substring(1), cells, row , col+1)
-  } else if (string.charAt(0) == '_'){
+    List(Cell(row, col, Wire)) ++ stringToWorldHelper(string.substring(1), cells, row , col+1)
+  } else if (string.charAt(0) == '-'){
+    List(Cell(row, col, Tail)) ++ stringToWorldHelper(string.substring(1), cells, row , col+1)
+  } else if (string.charAt(0) == '+'){
       stringToWorldHelper(string.substring(1), cells, row , col+1)
   } else {
       stringToWorldHelper(string.substring(1), cells, row + 1, 0)
   }
 
   def main(args: Array[String]): Unit = {
-    displayWorld(stringToWorld("_--=_\n___-_\n___-_\n_---_"), 1)
+    displayWorld(stringToWorld("_-+=_\n___-_\n___-_\n_---_"), 1)
   }
 
   def displayWorld(world: World, upperLimit: Int): World = if (world.finished() || upperLimit <= 0){
