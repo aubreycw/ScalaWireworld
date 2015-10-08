@@ -20,15 +20,17 @@ case class World(cells: List[Cell], yr: Int, xr: Int) {
   def fillInString(string: String, cellsList: List[Cell]): String = if (cellsList.length == 0) {
     string
   } else{
-    println(string)
-    println("done!")
     fillInString(addCellToString(string, cellsList.head), cellsList.tail)
   }
 
   def addCellToString(string: String, cell: Cell): String = {
     val loc = (cell.xc * (xr+1)) + cell.yc
-    val start = string.substring(0, loc-1)
-    val end = string.substring(loc + 1)
+    val start = string.substring(0, loc)
+    val end = if (string.length > loc){
+      string.substring(loc + 1)
+    } else {
+      ""
+    }
     val character = typeToString(cell)
     start.concat(character).concat(end)
   }
@@ -39,9 +41,9 @@ case class World(cells: List[Cell], yr: Int, xr: Int) {
     case Empty => "_"
   }
 
-  def blankWorld(yp: Int, xp: Int ): String = if (yp > yr){
+  def blankWorld(yp: Int, xp: Int ): String = if (yp >= yr){
     ""
-  } else if (xp > xr) {
+  } else if (xp >= xr) {
     "\n".concat(blankWorld(yp+1, 0))
   } else {
     "_".concat(blankWorld(yp, xp+1))

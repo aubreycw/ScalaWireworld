@@ -2,6 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4be6fba9-021f-47b5-8012-39b58eb9e9b6" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/WireworldScala/Cell$.class" afterPath="$PROJECT_DIR$/out/production/WireworldScala/Cell$.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/WireworldScala/Cell.class" afterPath="$PROJECT_DIR$/out/production/WireworldScala/Cell.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/WireworldScala/CellType.class" afterPath="$PROJECT_DIR$/out/production/WireworldScala/CellType.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/WireworldScala/Empty$.class" afterPath="$PROJECT_DIR$/out/production/WireworldScala/Empty$.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/WireworldScala/Head$.class" afterPath="$PROJECT_DIR$/out/production/WireworldScala/Head$.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/WireworldScala/Main$$anonfun$stringToWorld$1.class" afterPath="$PROJECT_DIR$/out/production/WireworldScala/Main$$anonfun$stringToWorld$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/WireworldScala/Main$$anonfun$stringToWorld$2.class" afterPath="$PROJECT_DIR$/out/production/WireworldScala/Main$$anonfun$stringToWorld$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/WireworldScala/Main$.class" afterPath="$PROJECT_DIR$/out/production/WireworldScala/Main$.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/WireworldScala/Tail$.class" afterPath="$PROJECT_DIR$/out/production/WireworldScala/Tail$.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/WireworldScala/World.class" afterPath="$PROJECT_DIR$/out/production/WireworldScala/World.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Main.scala" afterPath="$PROJECT_DIR$/src/Main.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -28,8 +38,8 @@
       <file leaf-file-name="Main.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Main.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.0387812">
-              <caret line="25" column="3" selection-start-line="25" selection-start-column="3" selection-end-line="25" selection-end-column="3" />
+            <state vertical-scroll-proportion="0.6232687">
+              <caret line="15" column="33" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -460,8 +470,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0387812">
-          <caret line="25" column="3" selection-start-line="25" selection-start-column="3" selection-end-line="25" selection-end-column="3" />
+        <state vertical-scroll-proportion="0.6232687">
+          <caret line="15" column="33" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
           <folding />
         </state>
       </provider>
