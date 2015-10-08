@@ -1,17 +1,15 @@
 /**
  * Created by Emily on 7/10/15.
  */
-
-
 case class World(cells: List[Cell], yr: Int, xr: Int) {
   def transition(): World = {
     World(transitionCells(cells), yr, xr)
   }
 
-  def transitionCells(cellsList: List[Cell]): List[Cell] = if (cellsList.length == 0){
+  def transitionCells(cellsList: List[Cell]): List[Cell] = if (cellsList.isEmpty){
     List()
   } else {
-    transitionOneCell(cellsList.head) ++ transitionCells(cellsList.tail)
+    List(transitionOneCell(cellsList.head)) ++ transitionCells(cellsList.tail)
   }
 
   def transitionOneCell(cell: Cell): Cell = cell.ty match {
@@ -30,7 +28,7 @@ case class World(cells: List[Cell], yr: Int, xr: Int) {
   def touching_heads(xc: Int, yc: Int): Int = cells.map( x => isTouchingIsHeadBinary(xc, yc, x)).sum
 
   def isTouchingIsHeadBinary(xc: Int, yc: Int, cell: Cell): Int = cell.ty match {
-    case Head => Cell.isTouchingBinary(xc, yc)
+    case Head => cell.isTouchingBinary(xc, yc)
     case _  => 0
   }
 
@@ -38,7 +36,7 @@ case class World(cells: List[Cell], yr: Int, xr: Int) {
     fillInString(blankWorld(0, 0), cells)
   }
 
-  def fillInString(string: String, cellsList: List[Cell]): String = if (cellsList.length == 0) {
+  def fillInString(string: String, cellsList: List[Cell]): String = if (cellsList.isEmpty) {
     string
   } else{
     fillInString(addCellToString(string, cellsList.head), cellsList.tail)
