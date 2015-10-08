@@ -15,13 +15,24 @@ case class World(cells: List[Cell], yr: Int, xr: Int) {
   }
 
   def transitionOneCell(cell: Cell): Cell = cell.ty match {
-    case Head => Cell(cell.yc, cell.xc, Tail)
-    case Tail => Cell(cell.yc, cell.xc, Wire)
-    case Wire => transitionWire(cell.yc, cell.xc)
-    case Empty => Cell(cell.yc, cell.xc, Empty)
+    case Head => Cell(cell.xc, cell.yc, Tail)
+    case Tail => Cell(cell.xc, cell.yc, Wire)
+    case Wire => transitionWire(cell.xc, cell.yc)
+    case Empty => Cell(cell.xc, cell.yc, Empty)
   }
 
-  def transitionWire(yc: Int, xc: Int): Cell = 
+  def transitionWire(xc: Int, yc: Int): Cell = if (touching_heads(xc, yc) == 1 || touching_heads(xc, yc) == 2) {
+    Cell(xc, yc, Head)
+  } else {
+    Cell(xc, yc, Wire)
+  }
+
+  def touching_heads(xc: Int, yc: Int): Int = cells.map( x => isTouchingIsHeadBinary(xc, yc, x)).sum
+
+  def isTouchingIsHeadBinary(xc: Int, yc: Int, cell: Cell): Int = cell.ty match {
+    case Head => Cell.isTouchingBinary(xc, yc)
+    case _  => 0
+  }
 
   def worldToString(): String = {
     fillInString(blankWorld(0, 0), cells)
@@ -78,7 +89,17 @@ case object Tail extends CellType
 case object Wire extends CellType
 case object Empty extends CellType
 
-case class Cell(xc: Int, yc: Int, ty: CellType) {}
+case class Cell(xc: Int, yc: Int, ty: CellType) {
+  def isTouchingBinary(otherX: Int, otherY: Int): Int = if (otherX - xc >= -1 && otherX - xc <= 1){
+    if (otherY - yc >= -1 && otherY - yc <= 1){
+      1
+    } else {
+      0
+    }
+  } else {
+    0
+  }
+}
 
 object Main {
   def stringToWorld(string: String): World = {
